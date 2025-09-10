@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	width: 100vw;
+	height: 100vh;
+}
+
+body {
+	background-color: rgb(147, 175, 175);
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	justify-content: center;
+	align-items: center;
+}
+
+.game-container {
+	width: 95vw;
+	height: 300px;
+	background: url("./assets/bg-day.jpg");
+	background-size: contain;
+	background-repeat: repeat-x;
+	border: 6px solid black;
+	box-shadow: 0 10px 20px rgb(75, 75, 75);
+	overflow: hidden;
+	animation: bg-animate 60s linear infinite;
+}
+
+@keyframes bg-animate {
+	from {
+		background-position: 0 0; /* Start position */
+	}
+	to {
+		background-position: -100% 0; /* End position (or adjust for vertical scroll) */
+	}
+}
+
+@media screen and (min-width: 540px) {
+	.game-container {
+		height: 400px;
+	}
+}
+
+@media screen and (min-width: 740px) {
+	.game-container {
+		width: 90vw;
+		height: 450px;
+	}
+}
+
+@media screen and (min-width: 1024px) {
+	.game-container {
+		height: 550px;
+	}
+}

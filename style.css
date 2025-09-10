@@ -24,21 +24,121 @@ body {
 .game-container {
 	width: 95vw;
 	height: 300px;
-	background: url("./assets/bg-day.jpg");
-	background-size: contain;
-	background-repeat: repeat-x;
 	border: 6px solid black;
 	box-shadow: 0 10px 20px rgb(75, 75, 75);
 	overflow: hidden;
+	position: relative;
+	transition: background-image 0.7s linear;
+}
+
+#bg-overlay {
+	width: 500vw;
+	height: 100%;
+	background: url("./assets/bg-day.jpg");
+	background-size: contain;
 	animation: bg-animate 60s linear infinite;
+}
+
+.hidden {
+	display: none;
 }
 
 @keyframes bg-animate {
 	from {
-		background-position: 0 0; /* Start position */
+		transform: translateX(0); /* Start position */
 	}
 	to {
-		background-position: -100% 0; /* End position (or adjust for vertical scroll) */
+		transform: translateX(-400vw);
+	}
+}
+
+#dino {
+	width: 50px;
+	height: 50px;
+	background: url("./assets/dino.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	position: absolute;
+	bottom: 10%;
+	left: 3%;
+	transition: all 0.09s linear;
+	border: 2px solid red;
+}
+
+.dino-jump {
+	animation: jump 0.8s ease-out;
+}
+
+.dino-crouch {
+	animation: crouch 0.8s ease-out;
+}
+
+.enemy-move-1 {
+	animation: enemy-move 3.8s linear infinite;
+}
+.enemy-move-2 {
+	animation: enemy-move 2.5s linear infinite;
+}
+.enemy-move-3 {
+	animation: enemy-move 1.7s linear infinite;
+}
+
+@keyframes jump {
+	0% {
+		bottom: 10%;
+	}
+	50% {
+		bottom: 50%;
+	}
+	100% {
+		bottom: 10%;
+	}
+}
+
+@keyframes crouch {
+	0% {
+		bottom: 10%;
+	}
+	50% {
+		bottom: 2%;
+	}
+	100% {
+		bottom: 10%;
+	}
+}
+
+.enemy {
+	width: 50px;
+	height: 50px;
+	position: absolute;
+	bottom: 10%;
+	left: 90%;
+	border: 2px solid black;
+}
+
+#enemy1 {
+	background: url("./assets/enemy1.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+#enemy2 {
+	background: url("./assets/enemy2.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+#enemy3 {
+	background: url("./assets/enemy3.png");
+	background-size: contain;
+	background-repeat: no-repeat;
+	bottom: 22%;
+}
+
+@keyframes enemy-move {
+	from {
+		left: 90%; /* Start position */
+	}
+	to {
+		left: -10%;
 	}
 }
 
@@ -46,17 +146,34 @@ body {
 	.game-container {
 		height: 400px;
 	}
+	#dino,
+	.enemy {
+		width: 65px;
+		height: 65px;
+	}
 }
 
 @media screen and (min-width: 740px) {
 	.game-container {
 		width: 90vw;
 		height: 450px;
+		background-position: center center;
+		background-size: contain;
+	}
+	#dino,
+	.enemy {
+		width: 70px;
+		height: 70px;
 	}
 }
 
 @media screen and (min-width: 1024px) {
 	.game-container {
 		height: 550px;
+	}
+	#dino,
+	.enemy3 {
+		width: 85px;
+		height: 85px;
 	}
 }

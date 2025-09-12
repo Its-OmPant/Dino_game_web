@@ -1,4 +1,8 @@
-import { changeTimeAndBackground, moveDino } from "./helper.js";
+import {
+	changeTimeAndBackground,
+	moveDino,
+	detectCollision,
+} from "./helper.js";
 
 // ---------- ELEMENTS ------------
 const gameContainer = document.querySelector(".game-container");
@@ -9,15 +13,20 @@ const dinoElement = document.querySelector("#dino");
 
 let time = "day";
 time = changeTimeAndBackground(time, bgContainer);
+let isPlaying = true;
 
 window.addEventListener("keydown", (e) => {
 	switch (e.key) {
+		case "p":
+		case "P":
+			playPauseGame();
+			break;
 		case "w":
 		case "ArrowUp":
-			// moveDino(dinoElement, "up", 10);
-			dinoElement.classList.add("dino-crouch");
+			dinoElement.classList.remove("dino-crouch");
+			dinoElement.classList.add("dino-jump");
 			setTimeout(() => {
-				dinoElement.classList.remove("dino-crouch");
+				dinoElement.classList.remove("dino-jump");
 			}, 800);
 			break;
 		case "a":
@@ -28,6 +37,10 @@ window.addEventListener("keydown", (e) => {
 		case "s":
 		case "ArrowDown":
 			dinoElement.classList.remove("dino-jump");
+			dinoElement.classList.add("dino-crouch");
+			setTimeout(() => {
+				dinoElement.classList.remove("dino-crouch");
+			}, 800);
 			break;
 		case "d":
 		case "ArrowRight":
@@ -36,51 +49,53 @@ window.addEventListener("keydown", (e) => {
 			break;
 	}
 });
-
+if (isPlaying) {
+	bgContainer.classList.add("animate-bg");
+}
 // change the time and bg
 setInterval(() => {
 	time = changeTimeAndBackground(time, bgContainer);
 }, 60000);
 
 let lastPaintTime = 0;
-
+let enemy_generation_interval_id;
 // generate Enemy
-generateEnemy();
-setInterval(() => {
-	generateEnemy();
-}, 3500);
+if (isPlaying) {
+	generateEnemy(); //generate one immediately
+	enemy_generation_interval_id = setInterval(() => {
+		generateEnemy();
+	}, 4500);
+}
 
 function main(ctime) {
-	window.requestAnimationFrame(main);
-	if ((ctime - lastPaintTime) / 1000 < 1 / 3) {
-		return;
-	}
-	lastPaintTime = ctime;
-
-	// check collisions and game over
-
-	// remove screen-out enemies
-	const allEnemies = Array.from(document.querySelectorAll(".enemy"));
-	let boundry = gameContainer.getBoundingClientRect().left;
-	allEnemies.forEach((enemy) => {
-		let enemyLeft = parseFloat(window.getComputedStyle(enemy, null).left);
-		if (enemyLeft < boundry) {
-			console.log("e b: ", enemyLeft);
-			console.log("b: ", boundry);
-			gameContainer.removeChild(enemy);
-			console.log("Enemy removed");
+	if (isPlaying) {
+		window.requestAnimationFrame(main);
+		if ((ctime - lastPaintTime) / 1000 < 1 / 8) {
+			return;
 		}
-	});
+		lastPaintTime = ctime;
+
+		const allEnemies = Array.from(document.querySelectorAll(".enemy"));
+		// check collisions and game over
+		let isCollided = detectCollision(dinoElement, allEnemies);
+		if (isCollided === true) {
+			gameOver();
+		}
+		// remove screen-out enemies
+		let boundry = gameContainer.getBoundingClientRect().left;
+		allEnemies.forEach((enemy) => {
+			let enemyLeft = parseFloat(
+				window.getComputedStyle(enemy, null).left
+			);
+			// remove enemy if out of boundry
+			if (enemyLeft < boundry) {
+				gameContainer.removeChild(enemy);
+			}
+		});
+	}
 }
 
 window.requestAnimationFrame(main);
-
-/**
- * in every 5s genearte a new enemy
- * add enemy-animation to it
- *
- *
- */
 
 function generateEnemy() {
 	const randNum = Math.round(Math.random() * 10 + 1);
@@ -106,6 +121,42 @@ function generateEnemy() {
 	let enemy = document.createElement("div");
 	enemy.id = enemyType;
 	enemy.classList.add("enemy", speedType);
-	// console.log(enemy);
 	gameContainer.appendChild(enemy);
+}
+
+function playPauseGame() {
+	if (isPlaying) {
+		// pause
+		isPlaying = false;
+		document.querySelectorAll("div").forEach((element) => {
+			if (getComputedStyle(element).animationName !== "none") {
+				element.style.animationPlayState = "paused";
+			}
+		});
+		clearInterval(enemy_generation_interval_id);
+	} else {
+		// resume
+		isPlaying = true;
+		document.querySelectorAll("div").forEach((element) => {
+			element.style.animationPlayState = "running";
+		});
+		generateEnemy();
+		enemy_generation_interval_id = setInterval(() => {
+			generateEnemy();
+		}, 4500);
+		window.requestAnimationFrame(main);
+	}
+}
+
+function gameOver() {
+	// remove all enemies
+	let allRenderedEnemies = Array.from(document.querySelectorAll(".enemy"));
+	allRenderedEnemies.forEach((enemy) => {
+		gameContainer.removeChild(enemy);
+	});
+
+	playPauseGame();
+
+	// TODO: show gameOver Overlay
+	alert("Game Over. Press p to restart");
 }

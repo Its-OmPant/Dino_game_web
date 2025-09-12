@@ -29,3 +29,35 @@ export function moveDino(dino, direction, amount, boundry) {
 		}
 	}
 }
+export function detectCollision(dino, enemies) {
+	let dinoRect = dino.getBoundingClientRect();
+	let isCollided = false;
+
+	enemies.forEach((enemy) => {
+		let enemyRect = enemy.getBoundingClientRect();
+		let type = enemy.id;
+
+		// ground enemies
+		if (type == "enemy1" || type == "enemy2") {
+			if (
+				enemyRect.left >= dinoRect.left &&
+				enemyRect.left <= dinoRect.right &&
+				parseInt(enemyRect.bottom) <= parseInt(dinoRect.bottom)
+			) {
+				isCollided = true;
+			}
+		}
+		// flying enemies
+		else if (type == "enemy3") {
+			if (
+				enemyRect.left >= dinoRect.left &&
+				enemyRect.left <= dinoRect.right &&
+				enemyRect.bottom >= dinoRect.top
+			) {
+				isCollided = true;
+			}
+		}
+	});
+
+	return isCollided;
+}

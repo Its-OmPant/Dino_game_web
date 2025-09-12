@@ -58,14 +58,6 @@ setInterval(() => {
 }, 60000);
 
 let lastPaintTime = 0;
-let enemy_generation_interval_id;
-// generate Enemy
-if (isPlaying) {
-	generateEnemy(); //generate one immediately
-	enemy_generation_interval_id = setInterval(() => {
-		generateEnemy();
-	}, 4500);
-}
 
 function main(ctime) {
 	if (isPlaying) {
@@ -92,6 +84,11 @@ function main(ctime) {
 				gameContainer.removeChild(enemy);
 			}
 		});
+
+		const allEnemies2 = Array.from(document.querySelectorAll(".enemy"));
+		if (allEnemies.length == 0) {
+			generateEnemy();
+		}
 	}
 }
 
@@ -133,17 +130,12 @@ function playPauseGame() {
 				element.style.animationPlayState = "paused";
 			}
 		});
-		clearInterval(enemy_generation_interval_id);
 	} else {
 		// resume
 		isPlaying = true;
 		document.querySelectorAll("div").forEach((element) => {
 			element.style.animationPlayState = "running";
 		});
-		generateEnemy();
-		enemy_generation_interval_id = setInterval(() => {
-			generateEnemy();
-		}, 4500);
 		window.requestAnimationFrame(main);
 	}
 }

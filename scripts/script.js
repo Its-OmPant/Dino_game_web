@@ -8,18 +8,27 @@ import {
 const gameContainer = document.querySelector(".game-container");
 const bgContainer = document.querySelector("#bg-overlay");
 const dinoElement = document.querySelector("#dino");
-
+const startButton = document.querySelector(".start");
+const closeButton = document.querySelector("#close");
+const restartButton = document.querySelector("#restart");
+const instructionOverlay = document.querySelector("#instruction-overlay");
+const gameoverOverlay = document.querySelector("#gameover-overlay");
 // ---------- GAME LOGIC ------------
 
 let time = "day";
 time = changeTimeAndBackground(time, bgContainer);
-let isPlaying = true;
+let isPlaying = false;
 
 window.addEventListener("keydown", (e) => {
 	switch (e.key) {
 		case "p":
 		case "P":
 			playPauseGame();
+			break;
+		case "i":
+		case "I":
+			playPauseGame();
+			instructionOverlay.classList.toggle("hidden");
 			break;
 		case "w":
 		case "ArrowUp":
@@ -92,8 +101,6 @@ function main(ctime) {
 	}
 }
 
-window.requestAnimationFrame(main);
-
 function generateEnemy() {
 	const randNum = Math.round(Math.random() * 10 + 1);
 	let enemyType;
@@ -149,6 +156,27 @@ function gameOver() {
 
 	playPauseGame();
 
-	// TODO: show gameOver Overlay
-	alert("Game Over. Press p to restart");
+	gameoverOverlay.classList.remove("hidden");
 }
+
+// TODO: Uncomment while deploying
+// for mobile screens
+// if (window.innerHeight > window.innerWidth) {
+// 	document.querySelector("body").style.transform = "rotate(90deg)";
+// }
+
+closeButton.onclick = () => {
+	instructionOverlay.classList.add("hidden");
+};
+
+startButton.onclick = (e) => {
+	instructionOverlay.classList.add("hidden");
+	isPlaying = true;
+	window.requestAnimationFrame(main);
+	bgContainer.classList.add("animate-bg");
+};
+
+restartButton.onclick = () => {
+	gameoverOverlay.classList.add("hidden");
+	playPauseGame();
+};

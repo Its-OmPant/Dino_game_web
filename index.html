@@ -7,21 +7,90 @@
 		<link rel="stylesheet" href="./style.css" />
 	</head>
 	<body>
-		<div class="header">
-			<div><button id="play-pause">Play</button></div>
-			<div id="score-container">
-				<p>Score: <span id="score">10</span></p>
-				<p>High Score: <span id="high-score">30</span></p>
+		<div id="instruction-overlay" class="overlay">
+			<div id="instructions">
+				<div id="close">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-circle-x-icon lucide-circle-x"
+						style="pointer-events: none"
+					>
+						<circle cx="12" cy="12" r="10" />
+						<path d="m15 9-6 6" />
+						<path d="m9 9 6 6" />
+					</svg>
+				</div>
+				<h2 id="i-title">Welcome To Dino Web Game</h2>
+				<div class="rules">
+					<p class="subtitle">Instructions</p>
+					<p id="summary">
+						Save the dino from enemies. Jump over ground enemies and
+						crouch for flying enemies.
+					</p>
+					<p>
+						- To <span class="move">Jump,</span> Press
+						<span class="key">W</span> or
+						<span class="key">ArrowUp</span>
+					</p>
+					<p>
+						- To <span class="move">Crouch,</span> Press
+						<span class="key">S</span> or
+						<span class="key">ArrowDown</span>
+					</p>
+					<p>
+						- To Move <span class="move">Left,</span> Press
+						<span class="key">A</span> or
+						<span class="key">ArrowLeft</span>
+					</p>
+					<p>
+						- To Move <span class="move">Right,</span> Press
+						<span class="key">D</span> or
+						<span class="key">ArrowRight</span>
+					</p>
+					<p>
+						- To <span class="move">Show</span> this dialog again
+						Press
+						<span class="key"> i </span>
+					</p>
+					<p class="last">
+						Press <span class="key">P</span> To Pause / Play,
+					</p>
+					<button class="start">Press To Start</button>
+				</div>
 			</div>
 		</div>
-		<div class="game-container">
-			<div id="bg-overlay"></div>
-			<div id="dino"></div>
+		<div id="gameover-overlay" class="overlay hidden">
+			<div id="gameover-container">
+				<h4>Game Over</h4>
+				<h2>Your Score: <span id="game-over-score">5</span></h2>
+				<button id="restart">Restart</button>
+			</div>
 		</div>
-		<div class="hotkeys">
-			<button>Left</button>
-			<button>Jump</button>
-			<button>Right</button>
+		<div class="container">
+			<div class="header">
+				<div><button id="play-pause">Play</button></div>
+				<div id="score-container">
+					<p>Score: <span id="score">10</span></p>
+					<p>High Score: <span id="high-score">30</span></p>
+				</div>
+			</div>
+			<div class="game-container">
+				<div id="bg-overlay"></div>
+				<div id="dino"></div>
+			</div>
+			<div class="hotkeys">
+				<button>Left</button>
+				<button>Jump</button>
+				<button>Right</button>
+			</div>
 		</div>
 		<img src="./assets/bg-day.jpg" class="hidden" alt="" />
 		<img src="./assets/bg-night.jpg" class="hidden" alt="" />

@@ -19,6 +19,20 @@ body {
 	gap: 20px;
 	justify-content: center;
 	align-items: center;
+	overflow: hidden;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+	position: relative;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	position: absolute;
+	z-index: 1;
 }
 
 .game-container {
@@ -65,7 +79,7 @@ body {
 	bottom: 10%;
 	left: 3%;
 	transition: all 0.09s linear;
-	border: 2px solid red;
+	/* border: 2px solid red; */
 }
 
 .dino-jump {
@@ -116,7 +130,7 @@ body {
 	position: absolute;
 	bottom: 10%;
 	left: 95%;
-	border: 2px solid black;
+	/* border: 2px solid black; */
 }
 
 #enemy1 {
@@ -143,6 +157,107 @@ body {
 	to {
 		left: -10%;
 	}
+}
+
+.overlay {
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(19, 83, 103, 0.289);
+	backdrop-filter: blur(10px);
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	align-items: center;
+}
+
+#instructions,
+#gameover-container {
+	width: 80vw;
+	max-width: 400px;
+	background-color: rgb(11, 55, 68);
+	border-radius: 10px;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	gap: 20px;
+	align-items: center;
+	padding: 30px 10px;
+	color: white;
+}
+
+#i-title {
+	font-size: 20px;
+	letter-spacing: 1.4px;
+	text-align: center;
+}
+
+.rules p {
+	margin: 10px 5px;
+	font-size: 14px;
+	color: rgb(224, 224, 224);
+	line-height: 20px;
+	text-align: center;
+}
+p.subtitle {
+	font-size: 18px;
+	text-align: center;
+}
+
+.rules p.last {
+	margin-top: 30px;
+	color: white;
+}
+
+button.start {
+	width: 100%;
+	margin: 5px 0;
+	padding: 6px 10px;
+	border-radius: 4px;
+	border: 0;
+}
+
+.key {
+	padding: 2px 4px;
+	margin: 3px;
+	border-radius: 3px;
+	background-color: rgb(182, 182, 182);
+	color: black;
+	font-family: "Caprasimo", serif;
+}
+
+#close {
+	position: absolute;
+	width: 30px;
+	height: 30px;
+	top: -5px;
+	right: -5px;
+	background-color: rgb(235, 235, 235);
+	border-radius: 24px;
+	padding: 2px;
+	color: rgb(196, 94, 94);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.hidden {
+	display: none;
+	visibility: hidden;
+}
+
+#gameover-container h4 {
+	font-size: 18px;
+	font-weight: 300;
+}
+#gameover-container h2 {
+	font-size: 22px;
+	font-weight: 600;
+	letter-spacing: 1.2px;
+}
+#restart {
+	padding: 4px 10px;
 }
 
 @media screen and (min-width: 540px) {

@@ -69,6 +69,7 @@
 		</div>
 		<div id="gameover-overlay" class="overlay hidden">
 			<div id="gameover-container">
+				<span id="hScore_msg" class="hidden">New High Score</span>
 				<h4>Game Over</h4>
 				<h2>Your Score: <span id="game-over-score">5</span></h2>
 				<button id="restart">Restart</button>
@@ -76,20 +77,21 @@
 		</div>
 		<div class="container">
 			<div class="header">
-				<div><button id="play-pause">Play</button></div>
-				<div id="score-container">
-					<p>Score: <span id="score">10</span></p>
-					<p>High Score: <span id="high-score">30</span></p>
-				</div>
+				<p>Score: <span id="score">10</span></p>
+				<p>High Score: <span id="high-score">30</span></p>
 			</div>
 			<div class="game-container">
 				<div id="bg-overlay"></div>
 				<div id="dino"></div>
 			</div>
 			<div class="hotkeys">
-				<button>Left</button>
-				<button>Jump</button>
-				<button>Right</button>
+				<button id="btn-play-pause" data-control="pausePlay">
+					Pause
+				</button>
+				<button id="btn-left" data-control="left">Left</button>
+				<button id="btn-jump" data-control="jump">Jump</button>
+				<button id="btn-crouch" data-control="crouch">Crouch</button>
+				<button id="btn-right" data-control="right">Right</button>
 			</div>
 		</div>
 		<img src="./assets/bg-day.jpg" class="hidden" alt="" />

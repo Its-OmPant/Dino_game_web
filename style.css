@@ -35,6 +35,48 @@ body {
 	z-index: 1;
 }
 
+/* header styles */
+
+.header {
+	width: 95vw;
+	margin: 10px auto;
+	padding: 2px;
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	font-size: 20px;
+}
+.hotkeys {
+	width: 95vw;
+	margin: 20px auto;
+	display: flex;
+	justify-content: center;
+	gap: 16px;
+	border: 0;
+}
+
+.hotkeys button {
+	padding: 4px 10px;
+}
+
+.btn-animate {
+	animation: btn-press 0.3 linear;
+}
+
+@keyframes btn-press {
+	0% {
+		border: 0;
+	}
+	50% {
+		border: 10px solid green;
+		box-shadow: 0 0 2px green;
+	}
+	100% {
+		border: 0;
+		box-shadow: none;
+	}
+}
+
 .game-container {
 	width: 95vw;
 	height: 300px;
